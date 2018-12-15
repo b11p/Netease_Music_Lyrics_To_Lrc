@@ -13,7 +13,7 @@ namespace 云音乐歌词转lrc
         public Form1()
         {
             InitializeComponent();
-            this.MinimumSize = Size;
+            //this.MinimumSize = Size;
             lstDir.Items.Clear();
             string local = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             lstDir.Items.Add(local + @"\Packages\1F8B0F94.122165AE053F_j2p0p5q0044a6\LocalCache\cache\lyric");
@@ -21,13 +21,13 @@ namespace 云音乐歌词转lrc
             txtOD.Text = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             UpdateFileList();
 
-            AutoSetMinisize();
-            Graphics g = Graphics.FromHwnd(IntPtr.Zero);
-            float dpiX = g.DpiX;
-            float dpiY = g.DpiY;
-            Size b = this.Size - this.ClientSize;
-            var l = new Size((int)(800 * dpiX / 96), (int)(600 * dpiY / 96));
-            this.Size = l + b;
+            //AutoSetMinisize();
+            //Graphics g = Graphics.FromHwnd(IntPtr.Zero);
+            //float dpiX = g.DpiX;
+            //float dpiY = g.DpiY;
+            //Size b = this.Size - this.ClientSize;
+            //var l = new Size((int)(800 * dpiX / 96), (int)(600 * dpiY / 96));
+            //this.Size = l + b;
         }
 
         private const string 文件过大提示 = "当前文件过大（大于40KB），请确认选择了正确的文件";
@@ -224,10 +224,12 @@ namespace 云音乐歌词转lrc
         // 选择项更改时，自动更新预览
         private void lstFile_SelectedValueChanged(object sender, EventArgs e)
         {
-            FileInfo selectedFile = (FileInfo)lstFile.SelectedItem;
+            var selectedFile = lstFile.SelectedItem as FileInfo;
 
-            // 如果新选择的项目和已经选择的项目相同，则不触发
-            if (LastSuccessfulSelection != null &&
+            // 如果新选择的项目和已经选择的项目相同，或者新项目为 null（未选择任何项目时点击左侧空白处会发生），则不触发
+            if (selectedFile is null
+                ||
+                LastSuccessfulSelection != null &&
                 selectedFile.FullName == LastSuccessfulSelection.FullName)
                 return;
 
@@ -299,7 +301,7 @@ namespace 云音乐歌词转lrc
 
         private void Form1_Move(object sender, EventArgs e)
         {
-            AutoSetMinisize();
+            //AutoSetMinisize();
         }
         #endregion
     }
